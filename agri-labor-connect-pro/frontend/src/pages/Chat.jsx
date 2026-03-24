@@ -19,7 +19,8 @@ const Chat = () => {
     useEffect(() => {
         if (!user) { navigate('/login'); return; }
 
-        socketRef.current = io('http://localhost:5000');
+        const socketUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        socketRef.current = io(socketUrl);
         socketRef.current.emit('join', user.id);
 
         socketRef.current.on('receiveMessage', (data) => {

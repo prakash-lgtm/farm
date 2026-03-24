@@ -28,7 +28,7 @@ const LocationInput = ({ value, onChange, placeholder, required = false, classNa
         }
 
         return () => {
-            if (window.google.maps.event) {
+            if (window.google?.maps?.event && autocompleteRef.current) {
                 window.google.maps.event.clearInstanceListeners(autocompleteRef.current);
             }
         };
@@ -45,6 +45,13 @@ const LocationInput = ({ value, onChange, placeholder, required = false, classNa
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const { latitude, longitude } = position.coords;
+
+                if (!window.google?.maps?.Geocoder) {
+                    setLoadingLocation(false);
+                    alert('Google Maps Service is currently unavailable.');
+                    return;
+                }
+
                 const geocoder = new window.google.maps.Geocoder();
                 const latlng = { lat: latitude, lng: longitude };
 

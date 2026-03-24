@@ -19,7 +19,11 @@ const Login = () => {
             login(res.data);
             navigate(res.data.user.role === 'Farmer' ? '/farmer-dashboard' : '/worker-dashboard');
         } catch (err) {
-            alert(err.response?.data?.message || 'Login failed. Check your credentials.');
+            if (!err.response) {
+                alert('Network Error: Cannot reach the server. Please ensure the backend is running.');
+            } else {
+                alert(err.response?.data?.message || 'Login failed. Check your credentials.');
+            }
         } finally { setLoading(false); }
     };
 
