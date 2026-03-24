@@ -1,3 +1,4 @@
 ﻿node_modules/
 .DS_Store
 
+agri-labor-connect-pro/backend/.env
